@@ -1,0 +1,52 @@
+name: Linters
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: articulate/actions-markdownlint@v1
+        with:
+          config: markdownlint-config.json
+          files: "docs/**/*.md"
+          ignore: node_modules
+          version: 0.28.1
+
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+          cache: false
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.54
+
+          # Optional: working directory, useful for monorepos
+          working-directory: cmd
+
+          # Optional: golangci-lint command line arguments.
+          #
+          # Note: By default, the `.golangci.yml` file should be at the root of the repository.
+          # The location of the configuration file can be changed by using `--config=`
+          # args: --timeout=30m --config=/my/path/.golangci.yml --issues-exit-code=0
+
+          # Optional: show only new issues if it's a pull request. The default value is `false`.
+          only-new-issues: true
