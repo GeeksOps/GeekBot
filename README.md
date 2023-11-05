@@ -1,13 +1,13 @@
 # GeekBot
 
-
 ## Overview
 
-The **GeekBot** is a Telegram bot built using Go Lang that integrates with the GeekOps community group to enhance user interaction and community engagement. 
+The **GeekBot** is a Telegram bot built using Go Lang that integrates with the GeekOps community group to enhance user interaction and community engagement.
 
 It is designed to authenticate new members, automate moderation tasks, reward active participants, and foster a friendly and constructive environment ...
 
-## Features and Functionalities:
+## Features and Functionalities
+
 1. New Member Verification
     - The bot will implement a check to determine if a new member is a bot or a human, using CAPTCHA-based challenges or interaction-based verification methods.
 
@@ -30,27 +30,29 @@ It is designed to authenticate new members, automate moderation tasks, reward ac
 5. Points Redemption
     - Points can be exchanged for community merch, with 100 point equivalent to 1 UAH. Future plans include the introduction of achievements, and members' suggestions for these are welcomed.
 
-<p float="left">
-  <img src=images/gift-1.png width="15%" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src=images/gift-2.png width="15%" />
+<!-- markdownlint-disable MD033 -->
+<p style="display: grid; grid-template-columns: repeat(2, 1fr);  padding: 0% 10%;">
+  <img src=docs/images/gift-1.png width="50%" />
+  <img src=docs/images/gift-2.png width="50%" />
 </p>
+<!-- markdownlint-enable MD033 -->
 
 1. Community Rule Enforcement
     - GeekBot will maintain a list of prohibited words, primarily related to politics and commonly found in spam messages. If these words are detected, the message will be deleted.
 
-# Technical Specification for GeekBot Telegram Community Assistant:
+## Technical Specification for GeekBot Telegram Community Assistant
+
 ### Stack and Tooling
 
- - **Kubernetes** (K3s + Raspberry Pi setup). 
- - **Helm**
- - **ArgoCD** will automatically deploy the bot to Kubernetes when creating a new artifact with the tag.
- - **Mozilla SOPS** for secrets
- - **Go Lang** + Cobra + [telebot](https://github.com/tucnak/telebot)
- - **GitHub Actions** CI/CD pipeline
+- **Kubernetes** (K3s + Raspberry Pi setup).
+- **Helm**
+- **ArgoCD** will automatically deploy the bot to Kubernetes when creating a new artifact with the tag.
+- **Mozilla SOPS** for secrets
+- **Go Lang** + Cobra + [telebot](https://github.com/tucnak/telebot)
+- **GitHub Actions** CI/CD pipeline
 
+## Study Materials
 
-## Study Materials:
 - [learn-go-with-tests](https://quii.gitbook.io/learn-go-with-tests)
 - [Go in Action, Second Edition](https://www.manning.com/books/go-in-action-second-edition)
 - [Shipping Go Develop, deliver, discuss, design, and go again](https://www.manning.com/books/shipping-go)
