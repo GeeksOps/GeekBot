@@ -31,9 +31,9 @@ It is designed to authenticate new members, automate moderation tasks, reward ac
     - Points can be exchanged for community merch, with 100 point equivalent to 1 UAH. Future plans include the introduction of achievements, and members' suggestions for these are welcomed.
 
 <!-- markdownlint-disable MD033 -->
-<p style="display: grid; grid-template-columns: repeat(2, 1fr);  padding: 0% 10%;">
-  <img src=docs/images/gift-1.png width="50%" />
-  <img src=docs/images/gift-2.png width="50%" />
+<p style="display: flex; justify-content: space-around">
+  <img src=docs/images/gift-1.png width="25%" />
+  <img src=docs/images/gift-2.png width="25%" />
 </p>
 <!-- markdownlint-enable MD033 -->
 
