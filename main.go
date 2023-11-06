@@ -1,10 +1,9 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2023 @GeekOpsUA
 */
 package main
 
-import "github.com/GeekOpsUA/GeekBot/cmd"
+import "github.com/geekopsua/geekbot/cmd"
 
 func main() {
 	cmd.Execute()
