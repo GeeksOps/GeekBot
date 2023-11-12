@@ -6,54 +6,55 @@
 
 The **GeekBot** is a Telegram bot built using Go Lang that integrates with the GeekOps community group to enhance user interaction and community engagement.
 
-It is designed to authenticate new members, automate moderation tasks, reward active participants, and foster a friendly and constructive environment...
-Please read the [Concept](docs/plan/concept.md) for more information.
+It is designed to authenticate new members, automate moderation tasks, reward active participants, and foster a friendly and constructive environment ...
 
-## Requirements
+## Features and Functionalities
 
-To run this project, you need to have the following tools installed:
+1. New Member Verification
+    - The bot will implement a check to determine if a new member is a bot or a human, using CAPTCHA-based challenges or interaction-based verification methods.
 
-- ![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/GeekOpsUA/GeekBot)
+2. Account Maintenance
+    - GeekBot will automatically remove profiles that have been marked with the status "Deleted."
 
-Also, please check that `kubectl` and `helm` are installed on your machine.
-Additionally, we are using following tools:
+3. Moderation and Gamification
+    - The bot will serve as a moderator and will implement a gamified points system to incentivize positive behavior and community engagement.
 
-- **Go Packages**
-  - [Cobra](https://cobra.dev/#getting-started)
-  - [Telebot](https://github.com/tucnak/telebot#getting-started)
-- **Kubernetes**
-  - [K3D](https://k3d.io/#installation)
-  - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/#1-install-argo-cd)
-  - [Mozilla SOPS](https://github.com/getsops/sops#sops-secrets-operations)
-- **Helpful Tools**
-  - [Taskfile](https://taskfile.dev/#/)
-- **GitHub Actions**
-  - [markdown-lint](https://github.com/marketplace/actions/markdown-lint)
-  - [golangci-lint](https://github.com/marketplace/actions/run-golangci-lint)
-  - [Memer Action](https://github.com/marketplace/actions/memer-action)
+4. Points Distribution
+    - The bot will award points based on the following actions:
+        - Single-word answer that resolves an issue/question: 50 points
+        - Detailed answer with rationale for the solution that resolves an issue/question: 100 points
+        - Detailed answer with external references that lead to resolution: 150 points
+        - Contribution to discussion that aids in resolving an issue: 20 points
+        - Inviting a colleague or friend with an interest in IT infrastructure: 50 points
+        - Honest recommendation/feedback about an event or meeting in chat or via Google form: 200 points
+        - Members will be able to view their points balance using the `/my_points` command.
 
-## Getting Started
+5. Points Redemption
+    - Points can be exchanged for community merch, with 100 point equivalent to 1 UAH. Future plans include the introduction of achievements, and members' suggestions for these are welcomed.
 
-### Working with Taskfile
+<!-- markdownlint-disable MD033 -->
+| Example 1 | Example 2 |
+| :---: | :---: |
+| <img src=docs/images/gift-1.png width="50%" /> | <img src=docs/images/gift-2.png width="50%" /> |
+<!-- markdownlint-enable MD033 -->
 
-To list all available tasks, run:
+1. Community Rule Enforcement
+    - GeekBot will maintain a list of prohibited words, primarily related to politics and commonly found in spam messages. If these words are detected, the message will be deleted.
 
-```bash
-task --list-all
-```
+## Technical Specification for GeekBot Telegram Community Assistant
 
-_Also, you can run `task` without any arguments to see the list of available tasks._
+### Stack and Tooling
 
-To get more information about a specific task, run:
+- **Kubernetes** (K3s + Raspberry Pi setup).
+- **Helm**
+- **ArgoCD** will automatically deploy the bot to Kubernetes when creating a new artifact with the tag.
+- **Mozilla SOPS** for secrets
+- **Go Lang** + Cobra + [telebot](https://github.com/tucnak/telebot)
+- **GitHub Actions** CI/CD pipeline
 
-```bash
-task --summary <task-name>
-```
+## Study Materials
 
-Or, you can run:
-
-```bash
-task --summary
-```
-
-For default task.
+- [learn-go-with-tests](https://quii.gitbook.io/learn-go-with-tests)
+- [Go in Action, Second Edition](https://www.manning.com/books/go-in-action-second-edition)
+- [Shipping Go Develop, deliver, discuss, design, and go again](https://www.manning.com/books/shipping-go)
+- [Build an Orchestrator in Go (From Scratch)](https://www.manning.com/books/build-an-orchestrator-in-go-from-scratch)
