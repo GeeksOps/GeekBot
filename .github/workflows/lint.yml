@@ -4,10 +4,6 @@ on:
     branches-ignore:
       - main
       - develop
-  pull_request:
-    branches:
-      - main
-      - develop
 
 permissions:
   contents: read
@@ -24,7 +20,7 @@ jobs:
       - uses: articulate/actions-markdownlint@v1
         with:
           config: markdownlint-config.json
-          files: "*.md"
+          files: "*.md,docs/**/*.md"
           ignore: node_modules
           # version: 0.28.1
 
