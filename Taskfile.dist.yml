@@ -11,15 +11,8 @@ env:
   TARGET_ARCH_LIST: amd64 arm64
 
   APP_NAME: github.com/geekopsua/geekbot
-  REGISTRY_NAME: ghcr.io/geekopsua/geekbot
-
-  BUILD_DIR: build
 
 tasks:
-  install:
-    desc: Install dependencies
-    cmds:
-      - go get -v -t
   fmt:
     desc: Run go fmt
     cmds:
@@ -51,11 +44,13 @@ tasks:
       task build appVersion=v1.0.0
     cmds:
       - >-
-        ./scripts/build.sh
-        -cgo ${CGO_ENABLED} -o ${TARGET_OS} -a ${TARGET_ARCH} -b ${BUILD_DIR}
-        -n ${APP_NAME} -v {{.appVersion}}
+        CGO_ENABLED=${CGO_ENABLED};
+        GOOS=${TARGET_OS};
+        GOARCH=${TARGET_ARCH};
+        echo "Building for ${GOOS}/${GOARCH} ${APP_NAME}:{{.appVersion}}";
+        go build -o bin/geekbot
+        -ldflags "-X=${APP_NAME}/cmd.appVersion={{.appVersion}}"
 
-  # TODO: Fix this task
   build-all:
     deps:
       - fmt
@@ -65,49 +60,10 @@ tasks:
       - >-
         for os in ${TARGET_OS_LIST}; do
           for arch in ${TARGET_ARCH_LIST}; do
-            echo "Building for $os/$arch";
-            task build
-            -cgo ${CGO_ENABLED}
-            -o $os
-            -a $arch
-            -b ${BUILD_DIR}
-            -n ${APP_NAME} -v {{.appVersion}}
+            CGO_ENABLED=${CGO_ENABLED}
+            GOOS=$os
+            GOARCH=$arch
+            go build -o bin/geekbot
+            -ldflags "-X=${APP_NAME}/cmd.appVersion={{.appVersion}}"
           done
         done
-
-  build-docker:
-    desc: Build Docker image
-    summary: |
-      Build Docker image
-
-      You should pass the following arguments:
-      - Tag: Git tag name (e.g. v1.0.0)
-
-      Example:
-      ❯ task build-docker Tag=v1.0.0
-    env:
-      DOCKER_FILE: build/docker/Dockerfile
-    cmds:
-      - echo "Build ${REGISTRY_NAME}:{{.Tag}}"
-      - >-
-        docker build -t ${REGISTRY_NAME}:{{.Tag}}
-        -t ${REGISTRY_NAME}:latest
-        --cache-to type=inline
-        --file "${DOCKER_FILE}" .
-
-  push-docker:
-    desc: Push docker image
-    summary: |
-      Push docker image
-
-      You should pass the following arguments:
-      - Tag: Git tag name (e.g. v1.0.0)
-
-      Example:
-      ❯ task push Tag=v1.0.0
-
-    dir: "{{.USER_WORKING_DIR}}/docker/{{.Version}}"
-    cmds:
-      - >
-        docker push ${REGISTRY_NAME}:{{.Tag}}
-      - echo "Pushed ${REGISTRY_NAME}:{{.Tag}}"
