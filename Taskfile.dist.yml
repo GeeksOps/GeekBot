@@ -11,6 +11,7 @@ env:
   TARGET_ARCH_LIST: amd64 arm64
 
   APP_NAME: github.com/geekopsua/geekbot
+  REGISTRY_NAME: ghcr.io/geekopsua/geekbot
 
   BUILD_DIR: build
 
@@ -87,10 +88,10 @@ tasks:
     env:
       DOCKER_FILE: build/docker/Dockerfile
     cmds:
-      - echo "Build ${APP_NAME}:{{.Tag}}"
+      - echo "Build ${REGISTRY_NAME}:{{.Tag}}"
       - >-
-        docker build -t ${APP_NAME}:{{.Tag}}
-        -t ${APP_NAME}:latest
+        docker build -t ${REGISTRY_NAME}:{{.Tag}}
+        -t ${REGISTRY_NAME}:latest
         --cache-to type=inline
         --file "${DOCKER_FILE}" .
 
@@ -108,5 +109,5 @@ tasks:
     dir: "{{.USER_WORKING_DIR}}/docker/{{.Version}}"
     cmds:
       - >
-        docker push ${APP_NAME}:{{.Tag}}
-      - echo "Pushed ${APP_NAME}:{{.Tag}}"
+        docker push ${REGISTRY_NAME}:{{.Tag}}
+      - echo "Pushed ${REGISTRY_NAME}:{{.Tag}}"
