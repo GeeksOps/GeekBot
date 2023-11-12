@@ -28,15 +28,17 @@ while getopts ":cgo:o:a:n:v:b:" opt; do
   esac
 done
 
-mkdir -p ${BUILD_DIR}
+mkdir -p "${BUILD_DIR}"
 
 # Build the binary
 echo "Building for ${GOOS}/${GOARCH} ${APP_NAME}:${APP_VERSION}"
 
-CGO_ENABLED=${CGO_ENABLED} GOOS=${GOOS} GOARCH=${GOARCH}
-go build -o ${BUILD_DIR}/package/geekbot-${GOARCH} \
+CGO_ENABLED="${CGO_ENABLED}"
+GOOS="${GOOS}"
+GOARCH="${GOARCH}"
+go build -o "${BUILD_DIR}"/package/geekbot-"${GOARCH}" \
   -ldflags "-X=${APP_NAME}/cmd.appVersion=${APP_VERSION}"
 
-ls -lh ${BUILD_DIR}/package
+ls -lh "${BUILD_DIR}"/package
 
 exit $?
