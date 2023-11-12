@@ -1,0 +1,113 @@
+# https://taskfile.dev
+
+version: "3"
+
+env:
+  CGO_ENABLED: "0"
+  TARGET_OS: linux
+  TARGET_ARCH: arm64
+
+  TARGET_OS_LIST: linux darwin windows
+  TARGET_ARCH_LIST: amd64 arm64
+
+  APP_NAME: github.com/geekopsua/geekbot
+  REGISTRY_NAME: ghcr.io/geekopsua/geekbot
+
+  BUILD_DIR: build
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - go get -v -t
+  fmt:
+    desc: Run go fmt
+    cmds:
+      - go fmt ./cmd
+  lint:
+    desc: Run golangci-lint
+    cmds:
+      - golangci-lint run ./cmd
+  test:
+    desc: Run tests
+    cmds:
+      - go test -v -cover ./...
+
+  build:
+    aliases: ["default"]
+    deps:
+      - fmt
+      - lint
+      - test
+    desc: Build binaries
+    summary: |
+      Build binary for default platform
+
+      I.e., it takes the values of the environment variables
+      defined in the `env` section and uses them to build
+      Also it takes appVersion variable as a parameter
+
+      Example:
+      task build appVersion=v1.0.0
+    cmds:
+      - >-
+        ./scripts/build.sh
+        -cgo ${CGO_ENABLED} -o ${TARGET_OS} -a ${TARGET_ARCH} -b ${BUILD_DIR}
+        -n ${APP_NAME} -v {{.appVersion}}
+
+  # TODO: Fix this task
+  build-all:
+    deps:
+      - fmt
+      - lint
+    desc: Build binaries for all platforms
+    cmds:
+      - >-
+        for os in ${TARGET_OS_LIST}; do
+          for arch in ${TARGET_ARCH_LIST}; do
+            echo "Building for $os/$arch";
+            task build
+            -cgo ${CGO_ENABLED}
+            -o $os
+            -a $arch
+            -b ${BUILD_DIR}
+            -n ${APP_NAME} -v {{.appVersion}}
+          done
+        done
+
+  build-docker:
+    desc: Build Docker image
+    summary: |
+      Build Docker image
+
+      You should pass the following arguments:
+      - Tag: Git tag name (e.g. v1.0.0)
+
+      Example:
+      ❯ task build-docker Tag=v1.0.0
+    env:
+      DOCKER_FILE: build/docker/Dockerfile
+    cmds:
+      - echo "Build ${REGISTRY_NAME}:{{.Tag}}"
+      - >-
+        docker build -t ${REGISTRY_NAME}:{{.Tag}}
+        -t ${REGISTRY_NAME}:latest
+        --cache-to type=inline
+        --file "${DOCKER_FILE}" .
+
+  push-docker:
+    desc: Push docker image
+    summary: |
+      Push docker image
+
+      You should pass the following arguments:
+      - Tag: Git tag name (e.g. v1.0.0)
+
+      Example:
+      ❯ task push Tag=v1.0.0
+
+    dir: "{{.USER_WORKING_DIR}}/docker/{{.Version}}"
+    cmds:
+      - >
+        docker push ${REGISTRY_NAME}:{{.Tag}}
+      - echo "Pushed ${REGISTRY_NAME}:{{.Tag}}"
