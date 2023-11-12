@@ -109,5 +109,5 @@ tasks:
     dir: "{{.USER_WORKING_DIR}}/docker/{{.Version}}"
     cmds:
       - >
-        docker push ${REGISTRY_NAME}:{{.Tag}}
+        docker push --all-tags ${REGISTRY_NAME}
       - echo "Pushed ${REGISTRY_NAME}:{{.Tag}}"
