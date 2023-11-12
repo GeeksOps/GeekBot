@@ -28,10 +28,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Conventional Changelog Action
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.github_token }}
+      # TODO: Try create changelog during pull request
+      # - name: Conventional Changelog Action
+      #   uses: TriPSs/conventional-changelog-action@v3
+      #   with:
+      #     github-token: ${{ secrets.github_token }}
 
       # https://github.com/marketplace/actions/docker-login
       - name: Log in to the Container registry
