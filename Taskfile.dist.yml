@@ -27,21 +27,11 @@ tasks:
       - go test -v -cover ./...
 
   build:
-    aliases: ["default"]
     deps:
       - fmt
       - lint
       - test
     desc: Build binaries
-    summary: |
-      Build binary for default platform
-
-      I.e., it takes the values of the environment variables
-      defined in the `env` section and uses them to build
-      Also it takes appVersion variable as a parameter
-
-      Example:
-      task build appVersion=v1.0.0
     cmds:
       - >-
         CGO_ENABLED=${CGO_ENABLED};
