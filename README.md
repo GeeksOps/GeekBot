@@ -1,7 +1,5 @@
 # GeekBot
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/geekopsua/geekbot)](https://goreportcard.com/report/github.com/geekopsua/geekbot) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a8a1691dee8a438780caab8cb578353c)](https://app.codacy.com/gh/GeekOpsUA/GeekBot/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
 ## Overview
 
 The **GeekBot** is a Telegram bot built using Go Lang that integrates with the GeekOps community group to enhance user interaction and community engagement.
