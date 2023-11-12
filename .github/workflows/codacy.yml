@@ -38,6 +38,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Install the latest version of Go
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+
       # Execute Codacy Analysis CLI and generate a SARIF output
       # with the security issues identified during the analysis
       - name: Run Codacy Analysis CLI
@@ -48,6 +54,8 @@ jobs:
           # You can also omit the token and run the tools that support default configurations
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           verbose: true
+          run-gosec: "true"
+          run-staticcheck: "true"
           output: results.sarif
           format: sarif
           # Adjust severity of non-security issues
