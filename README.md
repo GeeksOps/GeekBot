@@ -42,8 +42,6 @@ To list all available tasks, run:
 task --list-all
 ```
 
-_Also, you can run `task` without any arguments to see the list of available tasks._
-
 To get more information about a specific task, run:
 
 ```bash
@@ -57,4 +55,3 @@ task --summary
 ```
 
 For default task.
-
